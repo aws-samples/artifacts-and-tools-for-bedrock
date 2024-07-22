@@ -33,7 +33,7 @@ export default function NavigationPanel() {
       {
         type: "link",
         text: "Documentation",
-        href: "https://github.com/aws-samples/aws-genai-llm-chatbot",
+        href: "https://github.com/aws-samples/artifacts-and-tools-for-bedrock",
         external: true,
       },
     );

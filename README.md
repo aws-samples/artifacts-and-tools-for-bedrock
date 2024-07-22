@@ -248,5 +248,4 @@ You can remove the stacks and all the associated resources created in your AWS a
 ```bash
 npx cdk destroy
 ```
-
 After deleting your stack, do not forget to delete the logs and content uploaded to the account.

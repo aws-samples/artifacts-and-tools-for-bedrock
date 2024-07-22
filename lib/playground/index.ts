@@ -3,7 +3,7 @@ import {
   ExecSyncOptionsWithBufferEncoding,
   execSync,
 } from "node:child_process";
-import { Utils } from "../uitls";
+import { Utils } from "../utils";
 import { WebSocketLambdaAuthorizer } from "aws-cdk-lib/aws-apigatewayv2-authorizers";
 import { WebSocketLambdaIntegration } from "aws-cdk-lib/aws-apigatewayv2-integrations";
 import { StackConfig } from "../types";
