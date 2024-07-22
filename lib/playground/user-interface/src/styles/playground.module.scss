@@ -1,0 +1,30 @@
+.sandbox_open {
+  width: 100%;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(50vw - 50px);
+  gap: 16px;
+}
+
+.sandbox_closed {
+  display: block;
+}
+
+.sandbox_container {
+  position: fixed;
+  top: 66px;
+  right: 18px;
+  width: calc(50vw - 50px);
+  height: calc(100vh - 86px);
+}
+
+.sandbox_container_expanded {
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  left: 5px;
+  bottom: 5px;
+  width: auto;
+  height: auto;
+  z-index: 2000;
+}
