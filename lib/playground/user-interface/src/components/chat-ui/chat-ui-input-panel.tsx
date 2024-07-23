@@ -29,6 +29,7 @@ export interface ChatUIInputPanelProps {
 export default function ChatUIInputPanel(props: ChatUIInputPanelProps) {
   const [inputText, setInputText] = useState("");
   const [fileDialogVisible, setFileDialogVisible] = useState(false);
+  const [isComposing, setIsComposing] = useState(false);
 
   useEffect(() => {
     const onWindowScroll = () => {
@@ -88,7 +89,7 @@ export default function ChatUIInputPanel(props: ChatUIInputPanelProps) {
   const onTextareaKeyDown = (
     event: React.KeyboardEvent<HTMLTextAreaElement>,
   ) => {
-    if (!props.running && event.key === "Enter" && !event.shiftKey) {
+    if (!props.running && event.key === "Enter" && !event.shiftKey && !isComposing) {
       event.preventDefault();
       onSendMessage();
     }
@@ -125,6 +126,8 @@ export default function ChatUIInputPanel(props: ChatUIInputPanelProps) {
             onKeyDown={onTextareaKeyDown}
             value={inputText}
             placeholder={props.inputPlaceholderText ?? "Send a message"}
+            onCompositionStart={() => setIsComposing(true)}
+            onCompositionEnd={() => setIsComposing(false)}
           />
           <div style={{ marginLeft: "8px" }}>
             <Button
