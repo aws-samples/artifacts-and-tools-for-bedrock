@@ -165,6 +165,12 @@ ArtifactsAndToolsStack.CognitoUserPool = https://xxxxx.console.aws.amazon.com/co
 
 **Step 9.** Login with the user created in **Step 7** and follow the instructions.
 
+### Deployment Errors
+
+#### Could not unzip uploaded file...
+
+If you encounter the error "*Could not unzip uploaded file. Please check your file, then try to upload again. (Service: Lambda, Status Code: 400*" during deployment, a possible reason could be that you ran cdk bootstrap with an older CDK version. Please delete the ``CDKToolkit`` stack and bootstrap again.
+
 ### Web Search Tool Configuration
 
 The Web Search Tool uses the [Brave Search API](https://brave.com/search/api/). To use the tool, you need to obtain an API key. After obtaining the API key, open the [AWS Secrets Manager](https://console.aws.amazon.com/secretsmanager/listsecrets) console and set the value for the secret specified in the output parameter ``ApiKeysSecretName``.
