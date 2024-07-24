@@ -62,12 +62,26 @@ Before deploying the solution, make sure the configuration in ``bin/artifacts-an
 ```
 
 ## Deployment
-### Environment setup
 
-#### Deploy with AWS Cloud9
-We recommend deploying with [AWS Cloud9](https://aws.amazon.com/cloud9/). 
-If you'd like to use Cloud9 to deploy the solution, you will need the following before proceeding:
-- use `Amazon Linux 2023` as the platform.
+### Environment setup
+#### Local deployment
+First, verify that your environment satisfies the following prerequisites:
+
+You have:
+
+1. An [AWS account](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/)
+2. `AdministratorAccess` policy granted to your AWS account (for production, we recommend restricting access as needed)
+3. Both console and programmatic access
+4. [NodeJS 20+](https://nodejs.org/en/download/) installed
+    - If you are using [`nvm`](https://github.com/nvm-sh/nvm) you can run the following before proceeding
+    - ```
+      nvm install 20 && nvm use 20
+      ```
+5. [AWS CLI](https://aws.amazon.com/cli/) installed and configured to use with your AWS account
+6. [Typescript 3.8+](https://www.typescriptlang.org/download) installed
+7. [AWS CDK CLI](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html) installed
+8. [Docker](https://docs.docker.com/get-docker/) installed
+   - N.B. [`buildx`](https://github.com/docker/buildx) is also required. For Windows and macOS `buildx` [is included](https://github.com/docker/buildx#windows-and-macos) in [Docker Desktop](https://docs.docker.com/desktop/)
 
 #### Deploy with Github Codespaces
 If you'd like to use [GitHub Codespaces](https://github.com/features/codespaces) to deploy the solution, you will need the following before proceeding:
@@ -94,25 +108,6 @@ Default output format: json
 ```
 
 You are all set for deployment; you can now jump to [deployment](#deployment).
-
-#### Local deployment
-If you have decided not to use AWS Cloud9 or GitHub Codespaces, verify that your environment satisfies the following prerequisites:
-
-You have:
-
-1. An [AWS account](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/)
-2. `AdministratorAccess` policy granted to your AWS account (for production, we recommend restricting access as needed)
-3. Both console and programmatic access
-4. [NodeJS 20+](https://nodejs.org/en/download/) installed
-    - If you are using [`nvm`](https://github.com/nvm-sh/nvm) you can run the following before proceeding
-    - ```
-      nvm install 20 && nvm use 20
-      ```
-5. [AWS CLI](https://aws.amazon.com/cli/) installed and configured to use with your AWS account
-6. [Typescript 3.8+](https://www.typescriptlang.org/download) installed
-7. [AWS CDK CLI](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html) installed
-8. [Docker](https://docs.docker.com/get-docker/) installed
-   - N.B. [`buildx`](https://github.com/docker/buildx) is also required. For Windows and macOS `buildx` [is included](https://github.com/docker/buildx#windows-and-macos) in [Docker Desktop](https://docs.docker.com/desktop/)
 
 ### Deployment
 
