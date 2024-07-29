@@ -15,3 +15,5 @@ openpyxl>=3.1.4
 imageio>=2.34.1
 Faker>=26.0.0
 pyarrow>=17.0.0
+networkx>=3.3
+diagrams>=0.23.4
