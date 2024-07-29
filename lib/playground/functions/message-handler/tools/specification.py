@@ -9,7 +9,7 @@ code_interpreter = {
 - Code must be executable, correct, and self-contained. All variables must be defined within the code block. Verify the code to ensure it is correct and complete. If the code is incorrect or incomplete, rewrite it and verify again.
 - Each code block should be self-contained and should not rely on variables or data from previous cells. Always write the code as if it is the first and only cell in the notebook.
 - Results must always be rendered in the Jupyter notebook cell output.
-- Supported additional libraries: pandas, numpy, matplotlib, scikit-learn, seaborn, scipy, pillow, opencv, geopandas, imageio, Faker.
+- Supported additional libraries: pandas, numpy, matplotlib, scikit-learn, seaborn, scipy, pillow, opencv, geopandas, pyarrow, imageio, Faker.
 - Always import libraries using the following conventions: import pandas as pd, import numpy as np, import matplotlib.pyplot as plt, import seaborn as sns, import cv2 (for opencv).
 - When working with OpenCV images, always display them using matplotlib and use the FONT_HERSHEY_SIMPLEX font for text. For PIL use ImageFont.load_default()
 - To handle data files like CSV or Excel, first, run the tool to read the file and display the schema (e.g., `df = pd.read_csv('file.csv')` followed by `print(df.head())` or `print(df.info())`).
