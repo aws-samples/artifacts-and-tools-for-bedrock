@@ -14,6 +14,10 @@ from common.session import load_session, save_session, create_dynamodb_session
 
 from botocore.exceptions import ClientError
 
+#custom exception for max retries on Bedrock call
+class BedrockConverseStreamMaxRetriesReached(Exception):
+    pass
+
 THROTTLE_DELAY = 1.0  # Delay in seconds when throttled
 
 
@@ -134,9 +138,9 @@ def converse_make_request_stream(
     additional_params = {}
     if tool_config:
         additional_params["toolConfig"] = {"tools": tool_config}
-
-    streaming_response = None
-    while True:
+    num_retries = 0
+    max_retries = 10
+    while num_retries < max_retries:
         try:
             streaming_response = bedrock_client.converse_stream(
                 modelId=BEDROCK_MODEL,
@@ -148,11 +152,14 @@ def converse_make_request_stream(
             break
         except ClientError as e:
             if e.response["Error"]["Code"] == "ThrottlingException":
-                print("Throttled, retrying after delay...")
+                num_retries += 1
+                print(f"Bedrock ConverseStream throttled. Retrying after {THROTTLE_DELAY} seconds (attempt {num_retries}/{max_retries})")
                 time.sleep(THROTTLE_DELAY)
             else:
                 raise e
-
+    else:
+        # This block is executed if the while loop completes without breaking
+        raise BedrockConverseStreamMaxRetriesReached(f"Maximum number of {max_retries} retries reached for Bedrock ConverseStream operation.")
     executor = ConverseToolExecutor(user_id, session_id, provider)
     for chunk in streaming_response["stream"]:
         if text := executor.process_chunk(chunk):
