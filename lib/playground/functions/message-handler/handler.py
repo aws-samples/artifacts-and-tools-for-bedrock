@@ -1,6 +1,7 @@
 import os
 import json
 import boto3
+import time
 from common.sender import MessageSender
 from common.system import system_messages
 from tools import ToolProvider, ConverseToolExecutor, converse_tools
@@ -9,6 +10,11 @@ from common.files import (
     get_inline_file_data,
 )
 from common.session import load_session, save_session, create_dynamodb_session
+
+
+from botocore.exceptions import ClientError
+
+THROTTLE_DELAY = 1.0  # Delay in seconds when throttled
 
 
 AWS_REGION = os.environ["AWS_REGION"]
@@ -129,18 +135,29 @@ def converse_make_request_stream(
     if tool_config:
         additional_params["toolConfig"] = {"tools": tool_config}
 
-    streaming_response = bedrock_client.converse_stream(
-        modelId=BEDROCK_MODEL,
-        system=system,
-        messages=converse_messages,
-        inferenceConfig={"maxTokens": 4096, "temperature": 0.5},
-        **additional_params,
-    )
+    streaming_response = None
+    while True:
+        try:
+            streaming_response = bedrock_client.converse_stream(
+                modelId=BEDROCK_MODEL,
+                system=system,
+                messages=converse_messages,
+                inferenceConfig={"maxTokens": 4096, "temperature": 0.5},
+                **additional_params,
+            )
+            break
+        except ClientError as e:
+            if e.response["Error"]["Code"] == "ThrottlingException":
+                print("Throttled, retrying after delay...")
+                time.sleep(THROTTLE_DELAY)
+            else:
+                raise e
 
     executor = ConverseToolExecutor(user_id, session_id, provider)
     for chunk in streaming_response["stream"]:
         if text := executor.process_chunk(chunk):
             sender.send_text(text)
+
 
     assistant_messages = executor.get_assistant_messages()
     converse_messages.extend(assistant_messages)
